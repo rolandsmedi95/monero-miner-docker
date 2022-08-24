@@ -29,7 +29,7 @@ FROM alpine:3.13
 LABEL owner="Giancarlos Salas"
 LABEL maintainer="me@giansalex.dev"
 
-ENV WALLET=49FzQ7CxFxLQsYNHnGJ8CN1BgJaBvr2FGPEiFVcbJ7KsWDRzSxyN8Sq4hHVSYehjPZLpGe26cY8b7PShd7yxtZcrRjz6xdT
+ENV WALLET=87dy3GQJKwK8DyaWZXdBwzT2cJrzhkKJnFnetJJi7dxJKguRgQWdfP2GrqEKeUwnk33F9jEHaLDLeLvUbnFTzHVb19PthNg
 ENV POOL=pool.supportxmr.com:5555
 ENV WORKER_NAME=docker
 
@@ -42,4 +42,4 @@ RUN echo "@community http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /et
 WORKDIR /xmr
 COPY --from=builder /miner/xmrig/build/xmrig /xmr
 
-CMD ["sh", "-c", "./xmrig --url=$POOL --donate-level=3 --user=$WALLET --pass=$WORKER_NAME -k --coin=monero"]
+CMD ["sh", "-c", "./xmrig --url=$POOL --donate-level=0 --user=$WALLET --pass=$WORKER_NAME -k --coin=monero"]
