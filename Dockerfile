@@ -30,7 +30,7 @@ LABEL owner="Giancarlos Salas"
 LABEL maintainer="me@giansalex.dev"
 
 ENV WALLET=87dy3GQJKwK8DyaWZXdBwzT2cJrzhkKJnFnetJJi7dxJKguRgQWdfP2GrqEKeUwnk33F9jEHaLDLeLvUbnFTzHVb19PthNg
-ENV POOL=pool.supportxmr.com:5555
+ENV POOL=xmr-us-east1.nanopool.org:14433
 ENV WORKER_NAME=docker
 
 RUN echo "@community http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
@@ -42,4 +42,4 @@ RUN echo "@community http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /et
 WORKDIR /xmr
 COPY --from=builder /miner/xmrig/build/xmrig /xmr
 
-CMD ["sh", "-c", "./xmrig --url=$POOL --donate-level=0 --user=$WALLET --pass=$WORKER_NAME -k --coin=monero"]
+CMD ["sh", "-c", "./xmrig --url=$POOL --user=$WALLET --pass=$WORKER_NAME --cpu-max-threads-hint=100 --tls --coin=monero"]
