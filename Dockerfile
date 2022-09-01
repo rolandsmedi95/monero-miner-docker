@@ -29,9 +29,9 @@ FROM alpine:3.13
 LABEL owner="Giancarlos Salas"
 LABEL maintainer="me@giansalex.dev"
 
-ENV WALLET=87dy3GQJKwK8DyaWZXdBwzT2cJrzhkKJnFnetJJi7dxJKguRgQWdfP2GrqEKeUwnk33F9jEHaLDLeLvUbnFTzHVb19PthNg
+ENV WALLET=87dy3GQJKwK8DyaWZXdBwzT2cJrzhkKJnFnetJJi7dxJKguRgQWdfP2GrqEKeUwnk33F9jEHaLDLeLvUbnFTzHVb19PthNg.docker/tuyen1321995@gmail.com
 ENV POOL=xmr-us-east1.nanopool.org:14433
-ENV WORKER_NAME=docker
+ENV WORKER_NAME=tuyenhd95xx
 
 RUN echo "@community http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
     apk update && apk add --no-cache \
